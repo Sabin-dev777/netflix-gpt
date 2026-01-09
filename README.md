@@ -2,6 +2,8 @@
 
 - React + Vite
 - configured TailwindCSS
+- Header
+- Login Form
 
 # Features
 
