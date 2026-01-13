@@ -2,8 +2,19 @@
 
 - React + Vite
 - configured TailwindCSS
+- Routing
 - Header
 - Login Form
+- Sign Up Form
+- Form Validation
+- useRef Hook
+- Firebase Setup
+- Deploying our App to production
+- Created Signup User Account
+- Implemented Sign In User Api
+- Created Redux Store with UserSlice
+- Implemented SignOut
+- BugFix : if the user is not logged in Redirect /browse to login page and vice-versa
 
 # Features
 
