@@ -25,6 +25,10 @@
 - Planning for MainContainer and SecondaryContainer
 - Update the store with Trailer Video Data
 - Embedded youtube video and make it autoplay and mute
+- MovieList component
+- Movie Detail component
+- WatchList
+- Watch
 
 # Features
 

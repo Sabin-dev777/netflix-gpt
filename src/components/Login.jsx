@@ -10,22 +10,36 @@ import { auth } from "../utils/firebase";
 import { photo_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [hasValue, setHasValue] = useState("");
+  const [showPassWord, setShowPassWord] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
 
   const email = useRef(null);
   const password = useRef(null);
   const name = useRef(null);
+  const timerRef = useRef(null);
   const dispatch = useDispatch();
+  const handleTogglePassword = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    setShowPassWord(true);
+    timerRef.current = setTimeout(() => {
+      setShowPassWord(false);
+    }, 2000);
+  };
   const handleButtonClick = () => {
     console.log(email.current.value);
     const message = checkValidateData(
       email.current.value,
       password.current.value,
       isSignInForm ? "" : name.current.value || "",
-      isSignInForm
+      isSignInForm,
     );
     setErrorMessage(message);
     if (message) return;
@@ -34,7 +48,7 @@ const Login = () => {
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value
+        password.current.value,
       )
         .then((userCredential) => {
           // Signed up
@@ -54,7 +68,7 @@ const Login = () => {
               email: email,
               displayName: displayName,
               photoURL: photo_URL,
-            })
+            }),
           );
         })
         .catch((error) => {
@@ -68,12 +82,14 @@ const Login = () => {
       signInWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value
+        password.current.value,
       )
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
+          if (user) {
+            navigate("/browse");
+          }
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -116,12 +132,25 @@ const Login = () => {
           placeholder="Email Address"
           className="p-4 my-4 bg-gray-800 w-full rounded-lg"
         />
-        <input
-          ref={password}
-          type="password"
-          placeholder="Password"
-          className="p-4 my-4 bg-gray-800 w-full rounded-lg"
-        />
+        <div className="relative">
+          <input
+            ref={password}
+            value={hasValue}
+            onChange={(e) => setHasValue(e.target.value)}
+            type={showPassWord ? "text" : "password"}
+            placeholder="Password"
+            className=" p-4 my-4 bg-gray-800 w-full rounded-lg "
+          />
+          {hasValue.length > 0 && (
+            <span
+              className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
+              onClick={handleTogglePassword}
+            >
+              {showPassWord ? "🙈" : "👁"}
+            </span>
+          )}
+        </div>
+
         <p className="text-red-500">{errorMessage}</p>
         <button
           className="p-4 my-4 bg-red-700 w-full rounded-lg font-semibold hover:bg-red-800 transition"
