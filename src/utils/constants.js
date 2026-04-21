@@ -5,8 +5,7 @@ export const MOVIE_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjk5NDkwNTdmM2U3OGE0MDc2OGNkODA0MTU2OWFiNSIsIm5iZiI6MTc2ODMzMTg0My45MzIsInN1YiI6IjY5NjY5YTQzZTQ5MjkwOGI0NDViZjhkMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eMuKCdbYK0bSZn8zzk27XLws5DkdtDtchqc-GXFhy0U",
+    Authorization: "Bearer" + import.meta.env.VITE_TMDB_TOKEN,
   },
 };
 export const IMG_URL = "https://image.tmdb.org/t/p/w500";
@@ -20,3 +19,5 @@ export const SUPPORTED_LANG = [
   { identifier: "spanish", name: "Spanish" },
   { identifier: "chineese", name: "Chineese" },
 ];
+
+export const OPENAI_KEY = import.meta.env.VITE_OPENAI_KEY;
