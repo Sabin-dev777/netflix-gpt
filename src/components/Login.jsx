@@ -7,7 +7,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { photo_URL } from "../utils/constants";
+import { BG_URL, photo_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -34,7 +34,6 @@ const Login = () => {
     }, 2000);
   };
   const handleButtonClick = () => {
-    console.log(email.current.value);
     const message = checkValidateData(
       email.current.value,
       password.current.value,
@@ -61,7 +60,7 @@ const Login = () => {
         })
         .then(() => {
           const { uid, email, displayName } = auth.currentUser;
-          console.log(auth.currentUser);
+
           dispatch(
             addUser({
               uid: uid,
@@ -107,7 +106,7 @@ const Login = () => {
       <div className="absolute">
         <img
           className="w-full h-full object-cover bg-linear-to-b from-black"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/e393bb3f-261f-43d1-99bb-16a157885615/web/GB-en-20260105-TRIFECTA-perspective_9567625f-6eee-4698-956c-bc23e5bcf3df_large.jpg"
+          src={BG_URL}
         />
       </div>
       <form

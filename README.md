@@ -29,6 +29,7 @@
 - Movie Detail component
 - WatchList
 - Watch
+- GPT search Feature
 
 # Features
 

@@ -3,12 +3,18 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 // import { useEffect } from "react";
 // import { addUser, removeUser } from "../utils/userSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleGPTSearch } from "../utils/GptSearchSlice";
+import { SUPPORTED_LANG } from "../utils/constants";
+import { changeLanguage } from "../utils/languageSlice";
 
 const Header = () => {
   const navigate = useNavigate();
 
   const user = useSelector((store) => store.user);
+  const gptSearchValue = useSelector((store) => store.gpt.gptSearchValue);
+
+  const dispatch = useDispatch();
 
   const handleSignOut = () => {
     signOut(auth)
@@ -19,7 +25,12 @@ const Header = () => {
         navigate("/error");
       });
   };
-
+  const handleGptSearch = () => {
+    dispatch(toggleGPTSearch());
+  };
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
   return (
     <div className="flex justify-between w-screen bg-linear-to-b from-black z-10 px-8 py-2 fixed top-0 right-0 left-0">
       <img
@@ -31,6 +42,26 @@ const Header = () => {
 
       {user && (
         <div className="flex items-center gap-4">
+          {gptSearchValue && (
+            <select
+              name=""
+              id=""
+              className="text-white focus:outline-none p-2 m-2 bg-black"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANG.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            className="bg-purple-800 text-white py-2 px-4 rounded-md cursor-pointer"
+            onClick={handleGptSearch}
+          >
+            {gptSearchValue ? "Home" : "GPT Search"}
+          </button>
           {/* Watchlist button */}
           <button
             className="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition"

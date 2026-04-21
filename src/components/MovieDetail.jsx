@@ -10,7 +10,7 @@ const MovieDetail = () => {
   const dispatch = useDispatch();
 
   const movies = useSelector((store) => store.movies.nowPlayingMovies);
-  console.log(movies);
+
   const watchlist = useSelector((store) => store.movies.watchlist); // ✅ get watchlist from Redux
 
   const movie = movies?.find((m) => m.id === parseInt(id));
